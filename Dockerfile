@@ -8,6 +8,9 @@ RUN apt-get -y update
 RUN apt-get -y install gcc
 
 # Install Ganymede Logging Extension + Dependencies
-COPY . /ganymede_nbserver
-RUN pip install -r /ganymede_nbserver/requirements.txt /ganymede_nbserver/. && \
-    rm -rf /ganymede_nbserver
+COPY . /srv/ganymede_nbserver
+WORKDIR /srv/ganymede_nbserver
+RUN pip install -r /srv/ganymede_nbserver/requirements.txt /srv/ganymede_nbserver/.
+
+# Execute the notebook server via bash script.
+CMD ["/bin/bash", "/srv/ganymede_nbserver/ganymede_nbserver.sh"]
