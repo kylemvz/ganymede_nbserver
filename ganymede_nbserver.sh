@@ -22,6 +22,6 @@ sudo -E PATH="${CONDA_DIR}/bin:$PATH" -u $USER jupyterhub-singleuser \
   --base-url=$JPY_BASE_URL \
   --hub-prefix=$JPY_HUB_PREFIX \
   --hub-api-url=$JPY_HUB_API_URL \
-  --config=/srv/ganymede_nbserver/jupyterhub_config.py \
+  --config=/srv/ganymede_nbserver/jupyter_notebook_config.py \
   ${notebook_arg} \
   $@
