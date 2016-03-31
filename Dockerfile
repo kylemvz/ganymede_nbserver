@@ -4,9 +4,6 @@ MAINTAINER Lab41
 # Update apt-get
 RUN apt-get -y update
 
-# Install gcc (required for some dependencies)
-RUN apt-get -y install gcc
-
 # Install Ganymede Logging Extension + Dependencies
 COPY . /srv/ganymede_nbserver
 WORKDIR /srv/ganymede_nbserver
