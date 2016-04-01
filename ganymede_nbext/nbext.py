@@ -18,11 +18,11 @@ class GanymedeHandler(ZMQChannelsHandler):
     #    #self.logger.info("Sending message: %s" % msg)
     #    super(GanymedeHandler, self).on_message(msg)
 
-    # Log a message sent from the kernel
+    # Log a message sent from the kernel (see https://jupyter-client.readthedocs.org/en/latest/#
     # Note: This is an exact copy of _on_zmq_reply from ZMQStreamHandler in base/zmqhandlers.py in v4.1.0 of notebook.
     #   This code is brittle and probably should be updated on the next release
     #   Ideally, we would log either immediately before or after calling the superclass method.
-    #   However, since _on_zmq_reply doesn't provide any hooks at the actual message, then
+    #   Unfortunately, _on_zmq_reply doesn't provide any hooks at the actual message.
     def _on_zmq_reply(self, stream, msg_list):
         if self.stream.closed() or stream.closed():
             self.log.warn("zmq message arrived on closed channel")
@@ -50,7 +50,7 @@ def load_jupyter_server_extension(nb_server_app):
             handlers[str(urlspec.regex.pattern)] = urlspec
 
     # Inject GanymedeRequestHandler into the /api/kernels/<kernel_id>/channels URLSpec mapping
-    api_kernel_channels_pattern = "/api/kernels/(?P<kernel_id>\w+-\w+-\w+-\w+-\w+)/channels$"
+    api_kernel_channels_pattern = "%s/api/kernels/(?P<kernel_id>\w+-\w+-\w+-\w+-\w+)/channels$" % base_url.rstrip("/")
     channelspec = handlers[api_kernel_channels_pattern]
     channelspec.kwargs = {'log': nb_server_app.log}
     channelspec.handler_class = GanymedeHandler
